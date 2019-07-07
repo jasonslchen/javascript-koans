@@ -45,30 +45,12 @@ describe("About Applying What We Have Learnt", function() {
       products.filter(function(pizza) {
         return pizza.containsNuts === false;
       }).forEach(function(pizzaType) {
-        if (pizzaType.ingredients.all(mushrooms) {
+        if (_.all(pizzaType, mushrooms)) {
           productsICanEat.push(pizzaType);
-        })
+        }
       })
 
       return productsICanEat;
-
-      
-
-      
-        // _.chain(products)
-        //   .filter(function(pizza) {
-        //     return pizza.containsNuts === false
-        //   })
-        //   .forEach(function(pizzaType) {
-        //       if (pizzaType.ingredients.all(mushrooms) {
-        //         productsICanEat.push(pizzaType);
-        //       })
-        //     })
-        // .value();
-        // return productsICanEat;
-
-      /* solve using filter() & all() / any() */
-
       expect(productsICanEat.length).toBe(1);
   });
 
@@ -106,15 +88,24 @@ describe("About Applying What We Have Learnt", function() {
         }
     }
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   it("should count the ingredient occurrence (functional)", function () {
     var ingredientCount = { "{ingredient name}": 0 };
-
+    _(products).chain()
+      .map(function (pizza) {
+      return pizza.ingredients;
+    }).flatten()
+      .reduce(function (count, ingredient) {
+      count[ingredient] = (count[ingredient] || 0) + 1;
+      return count;
+    }, ingredientCount)
+      .value();
+      
     /* chain() together map(), flatten() and reduce() */
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   /*********************************************************************************/
